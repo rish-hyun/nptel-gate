@@ -1,1 +1,1 @@
-# nptel-gate
+# GATE lectures downloader from NPTEL
