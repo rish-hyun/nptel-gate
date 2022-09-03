@@ -8,6 +8,8 @@ class Request:
                  base_url) -> None:
         self.base_url = base_url
 
+    # ------------------------------------------------------------------
+
     def request(self,
                 method,
                 endpoint,
@@ -26,3 +28,5 @@ class Request:
         if is_json:
             return res.json()
         return BeautifulSoup(res.content, 'lxml')
+
+    # ------------------------------------------------------------------

@@ -7,9 +7,11 @@ request = Request(base_url='https://gate.nptel.ac.in').request
 class Nptel:
 
     def get_departments():
+
         soup = request(method='GET',
                        endpoint='departments.php',
                        params={'c_id': 1})
+
         return {
             tag.img['alt']: {
                 'branchID': end_pt[0].split('=')[1],
@@ -21,10 +23,12 @@ class Nptel:
 
     def get_subjects(branchID,
                      cid):
+
         soup = request(method='GET',
                        endpoint='video.php',
                        params={'branchID': branchID,
                                'cid': cid})
+
         return [{
             'subject': tag.text,
             'value': tag['value'],
@@ -35,6 +39,7 @@ class Nptel:
     def get_topics(value,
                    branchID,
                    cid):
+
         return request(method='POST',
                        endpoint='listvideos.php',
                        data={'inputValue': value,
@@ -48,6 +53,7 @@ class Nptel:
                        value,
                        branchID,
                        cid):
+
         soup = request(method='POST',
                        endpoint='listvideos.php',
                        data={'keyword': topic,
@@ -55,4 +61,18 @@ class Nptel:
                              'branchID': branchID,
                              'cid': cid})
 
+        content = []  # this code needs refactoring
+        for td in soup.find_all('td'):
+            if td.get('id') == 'bold':
+                key = td.text
+                content.append({key: []})
+            elif td.text:
+                content[-1][key].append({'topic': td.text})
+            else:
+                _id = td.a["href"].split("('")[1].split("')")[0]
+                content[-1][key].append({
+                    'url': f'https://www.youtube.com/watch?v={_id}'
+                })
+
+        return content
     # ------------------------------------------------------------------
