@@ -61,7 +61,7 @@ class Nptel:
                              'branchID': branchID,
                              'cid': cid})
 
-        content = []  # this code needs refactoring
+        content = []  # this part needs refactoring
         for td in soup.find_all('td'):
             if td.get('id') == 'bold':
                 key = td.text
@@ -70,9 +70,7 @@ class Nptel:
                 content[-1][key].append({'topic': td.text})
             else:
                 _id = td.a["href"].split("('")[1].split("')")[0]
-                content[-1][key].append({
-                    'url': f'https://www.youtube.com/watch?v={_id}'
-                })
+                content[-1][key][-1]['url']=f'https://www.youtube.com/watch?v={_id}'
 
         return content
 
