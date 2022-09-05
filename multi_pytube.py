@@ -1,4 +1,5 @@
 import os
+from tqdm import tqdm
 from pytube import YouTube
 from multiprocessing import Process
 
@@ -42,8 +43,8 @@ class MultiPytube:
         stream.download(output_path=path)
 
     def start_downloader(self, path_url_list):
-        for path, url in path_url_list:
-            process_list = [Process(target=self.__multi_download,
-                                    args=(path, url,))]
-            [proc.start() for proc in process_list]
-            [proc.join() for proc in process_list]
+        process_list = [Process(target=self.__multi_download,
+                                args=(path, url,))
+                        for path, url in tqdm(path_url_list)]
+        [proc.start() for proc in tqdm(process_list)]
+        [proc.join() for proc in tqdm(process_list)]
