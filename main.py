@@ -40,9 +40,11 @@ def create_csv(dept_key):
 if __name__ == '__main__':
 
     dept_key = 'CSE'
+    base_dir = f'/content/drive/MyDrive/{dept_key}'
+
     df = create_csv(dept_key=dept_key)
     # df = pd.read_csv(f'{dept_key}.csv', index_col=None)
 
-    mp = MultiPytube(src_df=df, base_dir=dept_key)
+    mp = MultiPytube(src_df=df, base_dir=base_dir)
     for path_url in mp.get_subjects_path_url():
         mp.start_downloader(path_url)
