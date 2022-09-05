@@ -35,10 +35,11 @@ class MultiPytube:
             subject_df.insert(0, 'BASE_DIR', self.base_dir)
             yield list(map(self.__get_path_url, subject_df.values))
 
+    @staticmethod
     def __multi_download(path, url):
         yt = YouTube(url)
         stream = yt.streams.get_highest_resolution()
-        stream.download(output_path=url)
+        stream.download(output_path=path)
 
     def start_downloader(self, path_url_list):
         for path, url in path_url_list:
