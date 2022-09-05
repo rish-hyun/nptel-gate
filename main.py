@@ -40,8 +40,8 @@ def create_csv(dept_key):
 if __name__ == '__main__':
 
     dept_key = 'CSE'
-    # df = create_csv(dept_key=dept_key)
-    df = pd.read_csv(f'{dept_key}.csv', index_col=None)
+    df = create_csv(dept_key=dept_key)
+    # df = pd.read_csv(f'{dept_key}.csv', index_col=None)
 
     mp = MultiPytube(src_df=df, base_dir=dept_key)
     for path_url in mp.get_subjects_path_url():
