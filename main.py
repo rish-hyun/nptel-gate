@@ -1,17 +1,15 @@
 from nptel import Nptel as npt
+from multi_pytube import MultiPytube
 import pandas as pd
 
 
-if __name__ == '__main__':
-
-    dept_key = 'CSE'
+def create_csv(dept_key):
 
     dept = npt.get_departments()
     branchID = dept[dept_key]['branchID']
     cid = dept[dept_key]['cid']
 
-    subjects = npt.get_subjects(branchID=branchID,
-                                cid=cid)
+    subjects = npt.get_subjects(branchID=branchID, cid=cid)
 
     data = []
     for subject in subjects:
@@ -35,5 +33,16 @@ if __name__ == '__main__':
                                      'URL': sub_topic_2['url']})
 
     df = pd.DataFrame(data)
-    df.to_csv(f'{dept_key}.csv')
-    print(df)
+    df.to_csv(f'{dept_key}.csv', index=False)
+    return df
+
+
+if __name__ == '__main__':
+
+    dept_key = 'CSE'
+    # df = create_csv(dept_key=dept_key)
+    df = pd.read_csv(f'{dept_key}.csv', index_col=None)
+
+    mp = MultiPytube(src_df=df, base_dir=dept_key)
+    for path_url in mp.get_subjects_path_url():
+        mp.start_downloader(path_url)
