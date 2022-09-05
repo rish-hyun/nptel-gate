@@ -28,7 +28,7 @@ if __name__ == '__main__':
             for sub_topic in sub_topics:
                 for sub_topic_1, sub_topics_2 in sub_topic.items():
                     for sub_topic_2 in sub_topics_2:
-                        data.append({'SUBJECT': subject,
+                        data.append({'SUBJECT': subject['subject'],
                                      'TOPIC': topic,
                                      'SUB TOPIC 1': sub_topic_1,
                                      'SUB TOPIC 2': sub_topic_2['topic'],
