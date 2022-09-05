@@ -45,6 +45,7 @@ class MultiPytube:
     def start_downloader(self, path_url_list):
         process_list = [Process(target=self.__multi_download,
                                 args=(path, url,))
-                        for path, url in tqdm(path_url_list)]
-        [proc.start() for proc in tqdm(process_list)]
-        [proc.join() for proc in tqdm(process_list)]
+                        for path, url in tqdm(path_url_list,
+                                              desc='Creating Process')]
+        [proc.start() for proc in tqdm(process_list, desc='Starting Process')]
+        [proc.join() for proc in tqdm(process_list, desc='Joining Process')]
