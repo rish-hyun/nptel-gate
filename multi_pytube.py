@@ -33,8 +33,8 @@ class MultiPytube:
     @staticmethod
     def __multi_download(path, url):
         YoutubeDL({
-            'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
-            'outtmpl': f'{path}/%(title)s.%(ext)s'
+            'format': 'best',
+            'outtmpl': f'{path}/%(title)s.mp4'
 
         }).download(url)
 
