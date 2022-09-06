@@ -21,8 +21,8 @@ class MultiPytube:
                                    split(' ') if p]) for path in path_list])
 
     def __get_path_url(self, path_list):
-        path = self.__path_creater(path_list[:-2])
-        return path, path_list[-1]
+        path = self.__path_creater(path_list[:-1])
+        return path[:-1], path[-1], path_list[-1]
 
     def get_subjects_path_url(self):
         for sub in self.df['SUBJECT'].unique():
@@ -31,18 +31,18 @@ class MultiPytube:
             yield list(map(self.__get_path_url, subject_df.values))
 
     @staticmethod
-    def __multi_download(path, url):
+    def __multi_download(path, title, url):
         YoutubeDL({
             'format': 'best',
-            'outtmpl': f'{path}/%(title)s.mp4'
+            'outtmpl': f'{path}/{title}.mp4'
 
         }).download(url)
 
     def start_downloader(self, path_url_list):
         process_list = [Process(target=self.__multi_download,
-                                args=(path, url,))
-                        for path, url in tqdm(path_url_list,
-                                              desc='Creating Process')]
+                                args=(path, title, url,))
+                        for path, title, url in tqdm(path_url_list,
+                                                     desc='Creating Process')]
         [proc.start() for proc in tqdm(process_list, desc='Starting Process')]
         [proc.join() for proc in tqdm(process_list, desc='Joining Process')]
         print('Download Completed')
