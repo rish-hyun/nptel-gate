@@ -35,7 +35,6 @@ class MultiPytube:
         YoutubeDL({
             'format': 'best',
             'outtmpl': f'{path}/{title}.mp4'
-
         }).download(url)
 
     def start_downloader(self, path_url_list):
