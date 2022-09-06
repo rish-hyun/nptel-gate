@@ -17,6 +17,7 @@ class MultiPytube:
                                    replace('.', ' ').
                                    replace('\t', ' ').
                                    replace('\n', ' ').
+                                   replace('/', '').
                                    split(' ') if p]) for path in path_list])
 
     def __get_path_url(self, path_list):
