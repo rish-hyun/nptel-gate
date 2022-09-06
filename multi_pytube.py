@@ -21,13 +21,13 @@ class MultiPytube:
                                    split(' ') if p]) for path in path_list])
 
     def __get_path_url(self, path_list):
+        path_list[:0] = [dir for dir in self.base_dir.split('/') if dir]
         path = self.__path_creater(path_list[:-2])
         return path, path_list[-2], path_list[-1]
 
     def get_subjects_path_url(self):
         for sub in self.df['SUBJECT'].unique():
             subject_df = self.df.loc[lambda x: x['SUBJECT'] == sub]
-            subject_df.insert(0, 'BASE_DIR', self.base_dir)
             yield list(map(self.__get_path_url, subject_df.values))
 
     @staticmethod
