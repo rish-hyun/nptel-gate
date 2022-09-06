@@ -21,8 +21,8 @@ class MultiPytube:
                                    split(' ') if p]) for path in path_list])
 
     def __get_path_url(self, path_list):
-        path = self.__path_creater(path_list[:-1])
-        return path[:-1], path[-1], path_list[-1]
+        path = self.__path_creater(path_list[:-2])
+        return path, path_list[-2], path_list[-1]
 
     def get_subjects_path_url(self):
         for sub in self.df['SUBJECT'].unique():
