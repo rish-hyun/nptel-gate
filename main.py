@@ -1,5 +1,5 @@
 from nptel import Nptel as npt
-from multi_pytube import MultiPytube
+from multi_yt_dlp import MultiYtDlp
 import pandas as pd
 
 
@@ -45,6 +45,6 @@ if __name__ == '__main__':
     df = create_csv(dept_key=dept_key)
     # df = pd.read_csv(f'{dept_key}.csv', index_col=None)
 
-    mp = MultiPytube(src_df=df, base_dir=base_dir)
+    mp = MultiYtDlp(src_df=df, base_dir=base_dir)
     for path_url in mp.get_subjects_path_url():
         mp.start_downloader(path_url)

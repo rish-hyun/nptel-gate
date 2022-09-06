@@ -3,7 +3,7 @@ from tqdm import tqdm
 from multiprocessing import Process
 
 
-class MultiPytube:
+class MultiYtDlp:
 
     def __init__(self, src_df, base_dir):
         self.df = src_df
