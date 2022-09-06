@@ -10,19 +10,23 @@ class MultiYtDlp:
         self.base_dir = base_dir
 
     @staticmethod
-    def __path_creater(path_list):
-        return '/'.join(['_'.join([p for p in path.
-                                   replace('-', ' ').
-                                   replace(':', ' ').
-                                   replace('.', ' ').
-                                   replace('\t', ' ').
-                                   replace('\n', ' ').
-                                   replace('/', '').
+    def __string_formatter(string):
+        return string.\
+            replace(':', ' ').\
+            replace('.', ' ').\
+            replace('\t', ' ').\
+            replace('\n', ' ').\
+            replace('/', '-')
+
+    def __path_creater(self, path_list):
+        return '/'.join(['_'.join([p for p in self.__string_formatter(path).
                                    split(' ') if p]) for path in path_list])
 
     def __get_path_url(self, path_list):
         path = self.__path_creater(path_list[:-2])
-        return f'{self.base_dir}/{path}', path_list[-2], path_list[-1]
+        return f'{self.base_dir}/{path}',\
+            self.__string_formatter(path_list[-2]),\
+            path_list[-1]
 
     def get_subjects_path_url(self):
         for sub in self.df['SUBJECT'].unique():
