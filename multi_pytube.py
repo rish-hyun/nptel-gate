@@ -38,9 +38,10 @@ class MultiPytube:
 
     @staticmethod
     def __multi_download(path, url):
-        yt = YouTube(url)
-        stream = yt.streams.get_highest_resolution()
-        stream.download(output_path=path)
+        if not os.path.isfile(path):
+            yt = YouTube(url)
+            stream = yt.streams.get_highest_resolution()
+            stream.download(output_path=path)
 
     def start_downloader(self, path_url_list):
         process_list = [Process(target=self.__multi_download,
