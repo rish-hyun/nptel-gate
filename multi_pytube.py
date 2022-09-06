@@ -1,6 +1,5 @@
-import os
+from yt_dlp import YoutubeDL
 from tqdm import tqdm
-from pytube import YouTube
 from multiprocessing import Process
 
 
@@ -20,14 +19,8 @@ class MultiPytube:
                                    replace('\n', ' ').
                                    split(' ') if p]) for path in path_list])
 
-    @staticmethod
-    def __create_nested_path(nested_path):
-        if not os.path.exists(nested_path):
-            os.makedirs(nested_path)
-
     def __get_path_url(self, path_list):
         path = self.__path_creater(path_list[:-2])
-        self.__create_nested_path(path)
         return path, path_list[-1]
 
     def get_subjects_path_url(self):
@@ -38,10 +31,11 @@ class MultiPytube:
 
     @staticmethod
     def __multi_download(path, url):
-        yt = YouTube(url)
-        stream = yt.streams.get_highest_resolution()
-        if not os.path.isfile(f'{path}/{stream.title}.mp4'):
-            stream.download(output_path=path)
+        YoutubeDL({
+            'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+            'outtmpl': f'{path}/%(title)s.%(ext)s'
+
+        }).download(url)
 
     def start_downloader(self, path_url_list):
         process_list = [Process(target=self.__multi_download,
